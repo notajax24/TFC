@@ -5,7 +5,7 @@ import Features from "./Components/Pages/Features";
 import Packages from "./Components/Pages/Packages";
 import About from "./Components/Pages/About";
 import Exercises from "./Components/Pages/Exercises";
-import Join from "./Components/Pages/join";
+import Join from "./Components/Pages/Join";
 
 export default function App() {
   return (
