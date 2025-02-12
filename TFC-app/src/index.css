@@ -1,0 +1,50 @@
+@import "tailwindcss";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  font-family: "Montserrat", sans-serif;
+  background: #525252;
+}
+
+.bg-radial-rounded {
+  background: radial-gradient(circle at 50% 50%, #747474, #0a0a0a);
+}
+
+/* Add custom styles here */
+/* Hide scrollbar for Chrome, Safari and Opera */
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.hide-scrollbar {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+@keyframes gradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.animate-gradient {
+  background-size: 200% 200%;
+  animation: gradient 5s ease infinite;
+}
+.mobile-stats::-webkit-scrollbar {
+  height: 4px;
+}
+
+.mobile-stats::-webkit-scrollbar-thumb {
+  @apply bg-gray-600 rounded-full;
+}
