@@ -67,7 +67,7 @@ export default function Navbar() {
           <img 
             src={tfclogo} 
             alt="TFC Logo" 
-            className="h-18 w-auto"
+            className="h-14 w-auto"
           />
           
         </button>
@@ -93,7 +93,7 @@ export default function Navbar() {
             Packages
           </button>
           <button
-            onClick={() => scrollToSection("excercise")}
+            onClick={() => scrollToSection("exercises")}
             className="hover:text-orange-500 transition cursor-pointer "
           >
             Excercise

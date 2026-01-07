@@ -13,50 +13,51 @@ import {
 } from "react-icons/fa";
 
 export default function Home() {
-  const [countdown, setCountdown] = useState({ days: 0, hours: 0 });
 
-  // Set target date to January 26th
-  const getTargetDate = () => {
-    const now = new Date();
-    const target = new Date();
-    target.setMonth(0); // January (0-indexed)
-    target.setDate(26);
-    target.setHours(23, 59, 59, 999); // End of day
+  // const [countdown, setCountdown] = useState({ days: 0, hours: 0 });
+
+  // // Set target date to January 26th
+  // const getTargetDate = () => {
+  //   const now = new Date();
+  //   const target = new Date();
+  //   target.setMonth(0); // January (0-indexed)
+  //   target.setDate(26);
+  //   target.setHours(23, 59, 59, 999); // End of day
     
-    // If January 26th has passed this year, set it to next year
-    if (target < now) {
-      target.setFullYear(now.getFullYear() + 1);
-    } else {
-      target.setFullYear(now.getFullYear());
-    }
+  //   // If January 26th has passed this year, set it to next year
+  //   if (target < now) {
+  //     target.setFullYear(now.getFullYear() + 1);
+  //   } else {
+  //     target.setFullYear(now.getFullYear());
+  //   }
     
-    return target;
-  };
+  //   return target;
+  // };
 
-  useEffect(() => {
-    const targetDate = getTargetDate();
+  // useEffect(() => {
+  //   const targetDate = getTargetDate();
     
-    const updateCountdown = () => {
-      const now = new Date().getTime();
-      const target = targetDate.getTime();
-      const difference = target - now;
+  //   const updateCountdown = () => {
+  //     const now = new Date().getTime();
+  //     const target = targetDate.getTime();
+  //     const difference = target - now;
 
-      if (difference > 0) {
-        const days = Math.floor(difference / (1000 * 60 * 60 * 24));
-        const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-        setCountdown({ days, hours });
-      } else {
-        setCountdown({ days: 0, hours: 0 });
-      }
-    };
+  //     if (difference > 0) {
+  //       const days = Math.floor(difference / (1000 * 60 * 60 * 24));
+  //       const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+  //       setCountdown({ days, hours });
+  //     } else {
+  //       setCountdown({ days: 0, hours: 0 });
+  //     }
+  //   };
 
-    updateCountdown();
-    const interval = setInterval(updateCountdown, 1000 * 60); // Update every minute
+  //   updateCountdown();
+  //   const interval = setInterval(updateCountdown, 1000 * 60); // Update every minute
 
-    return () => clearInterval(interval);
-  }, []);
+  //   return () => clearInterval(interval);
+  // }, []);
   return (
-    <section className="relative min-h-screen bg-gradient-to-b from-black/80 via-black/60 to-black/80">
+    <section   id="home" className="relative min-h-screen bg-gradient-to-b from-black/80 via-black/60 to-black/80">
       {/* Video Background */}
       <video
         autoPlay
@@ -80,7 +81,7 @@ export default function Home() {
 
       <div className="container mx-auto px-4 h-screen flex flex-col items-center justify-center md:justify-center pt-20 md:pt-0">
         {/* Countdown Timer */}
-        <motion.div
+        {/* <motion.div
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.2 }}
@@ -93,7 +94,7 @@ export default function Home() {
               {String(countdown.days).padStart(2, "0")} Days {String(countdown.hours).padStart(2, "0")} Hrs
             </span>
           </p>
-        </motion.div>
+        </motion.div> */}
 
         {/* Main Content */}
         <div className="text-center relative z-10">
