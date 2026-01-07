@@ -6,7 +6,7 @@ import Packages from "./Components/Pages/Packages";
 import About from "./Components/Pages/About";
 import Exercises from "./Components/Pages/Exercises";
 import Join from "./Components/Pages/Join";
-import Testimonials from "./Components/Pages/testimonials";
+// import Testimonials from "./Components/Pages/testimonials";
 
 
 export default function App() {
