@@ -97,7 +97,7 @@ const annualPackages = [
   {
     name: "Elite",
     duration: "1 Year",
-    price: "21,999",
+    price: "23,999",
     idealFor: "Premium experience",
     services: [
       "All Basic Benefits",
