@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { motion } from "framer-motion";
 import { FaCheckCircle } from "react-icons/fa";
 
@@ -171,6 +171,88 @@ const FeatureCard = ({ feature }) => {
 
 // === Main Component ===
 export default function Features() {
+  const scrollContainerRef = useRef(null);
+  const [isPaused, setIsPaused] = useState(false);
+  const isUserScrollingRef = useRef(false);
+  const lastScrollLeftRef = useRef(0);
+
+  useEffect(() => {
+    const container = scrollContainerRef.current;
+    if (!container) return;
+
+    let scrollTimeout;
+    let animationFrameId;
+    let isDragging = false;
+
+    const handleInteractionStart = () => {
+      isDragging = true;
+      isUserScrollingRef.current = true;
+      setIsPaused(true);
+      clearTimeout(scrollTimeout);
+    };
+
+    const handleInteractionEnd = () => {
+      isDragging = false;
+      scrollTimeout = setTimeout(() => {
+        isUserScrollingRef.current = false;
+        setIsPaused(false);
+      }, 2000);
+    };
+
+    const handleScroll = () => {
+      const currentScroll = container.scrollLeft;
+      const scrollDiff = Math.abs(currentScroll - lastScrollLeftRef.current);
+      
+      // If scroll difference is significant, user is scrolling
+      if (scrollDiff > 2 && !isDragging) {
+        handleInteractionStart();
+      }
+      
+      lastScrollLeftRef.current = currentScroll;
+      clearTimeout(scrollTimeout);
+      handleInteractionEnd();
+    };
+
+    // Marquee auto-scroll function
+    const marqueeScroll = () => {
+      if (!isPaused && !isUserScrollingRef.current && container) {
+        const maxScroll = container.scrollWidth - container.clientWidth;
+        const currentScroll = container.scrollLeft;
+        
+        // Reset to start when reaching 50% (since we duplicated the content)
+        if (currentScroll >= maxScroll / 2) {
+          container.scrollLeft = 0;
+        } else {
+          container.scrollLeft += 1; // Marquee speed (adjust as needed)
+        }
+      }
+      animationFrameId = requestAnimationFrame(marqueeScroll);
+    };
+
+    container.addEventListener("scroll", handleScroll);
+    container.addEventListener("touchstart", handleInteractionStart, { passive: true });
+    container.addEventListener("mousedown", handleInteractionStart);
+    container.addEventListener("touchend", handleInteractionEnd, { passive: true });
+    container.addEventListener("mouseup", handleInteractionEnd);
+    container.addEventListener("mouseleave", handleInteractionEnd);
+
+    // Start marquee
+    animationFrameId = requestAnimationFrame(marqueeScroll);
+
+    return () => {
+      container.removeEventListener("scroll", handleScroll);
+      container.removeEventListener("touchstart", handleInteractionStart);
+      container.removeEventListener("mousedown", handleInteractionStart);
+      container.removeEventListener("touchend", handleInteractionEnd);
+      container.removeEventListener("mouseup", handleInteractionEnd);
+      container.removeEventListener("mouseleave", handleInteractionEnd);
+      if (animationFrameId) {
+        cancelAnimationFrame(animationFrameId);
+      }
+      clearTimeout(scrollTimeout);
+    };
+  }, [isPaused]);
+
   return (
     <section
       id="features"
@@ -208,28 +290,29 @@ export default function Features() {
         <div className="absolute inset-y-0 left-0 w-20 md:w-40 bg-gradient-to-r from-black to-transparent z-20 pointer-events-none" />
         <div className="absolute inset-y-0 right-0 w-20 md:w-40 bg-gradient-to-l from-black to-transparent z-20 pointer-events-none" />
 
-        {/* Moving Track Container */}
-        <div className="flex overflow-hidden py-8 sm:py-12 md:py-16">
-          <motion.div
-            className="flex gap-4 sm:gap-6 md:gap-8 px-2 sm:px-4 items-center"
-            animate={{
-              x: ["0%", "-50%"],
+        {/* Scrollable Container with Marquee */}
+        <div className="relative py-8 sm:py-12 md:py-16 overflow-hidden">
+          {/* Manual Scroll Container */}
+          <div 
+            ref={scrollContainerRef}
+            className="flex overflow-x-auto scrollbar-hide items-center snap-x snap-mandatory scroll-smooth"
+            style={{ 
+              scrollbarWidth: 'none',
+              msOverflowStyle: 'none',
+              WebkitOverflowScrolling: 'touch'
             }}
-            transition={{
-              x: {
-                repeat: Infinity,
-                repeatType: "loop",
-                duration: 35,
-                ease: "linear",
-              },
-            }}
-            whileHover={{ animationPlayState: "paused" }}
-            style={{ width: "max-content" }}
           >
-            {carouselFeatures.map((feature, index) => (
-              <FeatureCard key={`${feature.title}-${index}`} feature={feature} />
-            ))}
-          </motion.div>
+            <div 
+              className="flex gap-4 sm:gap-6 md:gap-8 items-center"
+              style={{ width: "max-content" }}
+            >
+              {carouselFeatures.map((feature, index) => (
+                <div key={`${feature.title}-${index}`} className="snap-start flex-shrink-0">
+                  <FeatureCard feature={feature} />
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
       </div>
     </section>
