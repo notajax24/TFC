@@ -64,7 +64,13 @@ export default function Home() {
         muted
         loop
         playsInline
+        preload="metadata"
         className="absolute inset-0 w-full h-full object-cover -z-10 hidden md:block"
+        onLoadedData={(e) => {
+          // Ensure video plays after loading
+          e.target.play().catch(() => {});
+        }}
+        style={{ willChange: 'auto' }}
       >
         <source src={bgvideo} type="video/mp4" />
         Your browser does not support the video tag.
@@ -76,10 +82,12 @@ export default function Home() {
           src={bg}
           alt="Gym background"
           className="w-full h-full object-cover"
+          loading="eager"
+          fetchPriority="high"
         />
       </div>
 
-      <div className="container mx-auto px-4 h-screen flex flex-col items-center justify-center md:justify-center pt-20 md:pt-0">
+      <div className="container mx-auto px-4 min-h-screen flex flex-col items-center justify-center md:justify-center pt-20 md:pt-0 pb-8 md:pb-0">
         {/* Countdown Timer */}
         {/* <motion.div
           initial={{ opacity: 0, y: -20 }}
@@ -97,14 +105,14 @@ export default function Home() {
         </motion.div> */}
 
         {/* Main Content */}
-        <div className="text-center relative z-10">
-          <h1 className="text-5xl md:text-7xl font-bold mb-8">
+        <div className="text-center relative z-10 px-4">
+          <h1 className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-bold mb-4 md:mb-8 leading-tight">
             <span className="text-slate-200">We Don&apos;t Just </span>
             <span className="bg-gradient-to-r from-yellow-400 via-orange-500 to-red-500 bg-clip-text text-transparent animate-gradient">
             Train
             </span>
           </h1>
-          <h1 className="text-5xl md:text-7xl font-bold mb-8">
+          <h1 className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-bold mb-6 md:mb-8 leading-tight">
             <span className="bg-gradient-to-r from-yellow-400 via-orange-500 to-red-500 bg-clip-text text-transparent animate-gradient">
             We
             </span>
@@ -112,7 +120,7 @@ export default function Home() {
           </h1>
 
           <motion.p
-            className="text-xl md:text-2xl text-gray-300 mb-12 max-w-3xl mx-auto"
+            className="text-base sm:text-lg md:text-xl lg:text-2xl text-gray-300 mb-8 md:mb-12 max-w-3xl mx-auto px-2"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.8 }}
@@ -126,12 +134,12 @@ export default function Home() {
             }}
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            className="mx-auto px-8 py-4 bg-gradient-to-r from-slate-500 to-red-200 hover:from-slate-400 hover:to-black text-grey-900 hover:text-white font-bold text-lg rounded-xl transition-all flex items-center gap-2 cursor-pointer"
+            className="mx-auto px-6 sm:px-8 py-3 sm:py-4 bg-gradient-to-r from-slate-500 to-red-200 hover:from-slate-400 hover:to-black text-grey-900 hover:text-white font-bold text-base sm:text-lg rounded-xl transition-all flex items-center gap-2 cursor-pointer"
           >
             Join Now
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              className="h-5 w-5"
+              className="h-4 w-4 sm:h-5 sm:w-5"
               viewBox="0 0 20 20"
               fill="currentColor"
             >

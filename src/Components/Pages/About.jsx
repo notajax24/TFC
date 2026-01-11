@@ -18,8 +18,8 @@ export default function About() {
 
   return (
     <footer id="about" className="relative bg-gradient-to-b from-gray-900 to-black text-gray-300 pt-16 pb-8 border-t border-gray-800 font-montserrat">
-      <div className="max-w-7xl mx-auto px-6 lg:px-8">
-        <div className="grid md:grid-cols-3 gap-12 text-center md:text-left">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 sm:gap-10 md:gap-12 text-center md:text-left">
           
           {/* Column 1: Brand & About */}
           <motion.div 
@@ -36,7 +36,7 @@ export default function About() {
                 TFC <span className="text-orange-500">NASHIK</span>
               </h2>
             </div>
-            <p className="text-sm text-gray-400 leading-relaxed max-w-sm mx-auto md:mx-0">
+            <p className="text-xs sm:text-sm text-gray-400 leading-relaxed max-w-sm mx-auto md:mx-0 px-2">
               Your premium fitness destination. We combine state-of-the-art equipment, 
               expert coaching, and a motivating atmosphere to help you crush your goals. 
               <br />
@@ -51,10 +51,10 @@ export default function About() {
             transition={{ duration: 0.5, delay: 0.2 }}
             className="space-y-4"
           >
-            <h3 className="text-white font-bold text-lg border-b border-orange-500/30 pb-2 inline-block mb-2">
+            <h3 className="text-white font-bold text-base sm:text-lg border-b border-orange-500/30 pb-2 inline-block mb-2">
               Get in Touch
             </h3>
-            <div className="flex flex-col gap-4 text-sm">
+            <div className="flex flex-col gap-3 sm:gap-4 text-xs sm:text-sm">
               <a 
                 href="https://maps.google.com/?q=The+Exchange+Tower+Nashik+Road" 
                 target="_blank" 
@@ -96,10 +96,10 @@ export default function About() {
             transition={{ duration: 0.5, delay: 0.4 }}
             className="space-y-4"
           >
-            <h3 className="text-white font-bold text-lg border-b border-orange-500/30 pb-2 inline-block mb-2">
+            <h3 className="text-white font-bold text-base sm:text-lg border-b border-orange-500/30 pb-2 inline-block mb-2">
               Connect With Us
             </h3>
-            <p className="text-sm text-gray-400 mb-4">
+            <p className="text-xs sm:text-sm text-gray-400 mb-3 sm:mb-4">
               Follow our journey and get daily fitness tips.
             </p>
             <div className="flex justify-center md:justify-start gap-4">

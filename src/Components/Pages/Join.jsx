@@ -59,7 +59,7 @@ export default function Join() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="text-4xl md:text-5xl font-bold text-center mb-16"
+          className="text-3xl sm:text-4xl md:text-5xl font-bold text-center mb-8 sm:mb-12 md:mb-16 px-2"
         >
           <span className="text-white">WHY </span>
           <span className="bg-gradient-to-r from-yellow-400 via-orange-500 to-red-500 bg-clip-text text-transparent">
@@ -67,7 +67,7 @@ export default function Join() {
           </span>
         </motion.h2>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 max-w-7xl mx-auto">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 md:gap-8 max-w-7xl mx-auto">
           {features.map((feature, index) => (
             <motion.div
               key={index}
@@ -79,23 +79,25 @@ export default function Join() {
                 scale: 1.05,
                 transition: { duration: 0.3, ease: "easeOut" }
               }}
-              className="bg-gray-800/50 backdrop-blur-sm border border-gray-700/50 rounded-xl p-6 md:p-8 hover:border-orange-500/50 hover:bg-gray-800/70 hover:shadow-lg hover:shadow-orange-500/20 transition-all duration-300 cursor-pointer group"
+              className="bg-gray-800/50 backdrop-blur-sm border border-gray-700/50 rounded-xl p-4 sm:p-6 md:p-8 hover:border-orange-500/50 hover:bg-gray-800/70 hover:shadow-lg hover:shadow-orange-500/20 transition-all duration-300 cursor-pointer group"
             >
               <div className="flex flex-col items-center text-center">
                 <motion.div 
-                  className="mb-4 text-orange-500"
+                  className="mb-3 sm:mb-4 text-orange-500"
                   whileHover={{ 
                     scale: 1.15,
                     rotate: [0, -5, 5, -5, 0],
                     transition: { duration: 0.5 }
                   }}
                 >
-                  {feature.icon}
+                  <div className="w-10 h-10 sm:w-12 sm:h-12 flex items-center justify-center">
+                    {feature.icon}
+                  </div>
                 </motion.div>
-                <h3 className="text-xl md:text-2xl font-bold text-white mb-4 group-hover:text-orange-400 transition-colors duration-300">
+                <h3 className="text-lg sm:text-xl md:text-2xl font-bold text-white mb-3 sm:mb-4 group-hover:text-orange-400 transition-colors duration-300 px-2">
                   {feature.title}
                 </h3>
-                <p className="text-gray-300 text-sm md:text-base leading-relaxed group-hover:text-gray-200 transition-colors duration-300">
+                <p className="text-gray-300 text-xs sm:text-sm md:text-base leading-relaxed group-hover:text-gray-200 transition-colors duration-300 px-2">
                   {feature.description}
                 </p>
               </div>
