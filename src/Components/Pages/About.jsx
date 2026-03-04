@@ -117,7 +117,7 @@ export default function About() {
                 <FaWhatsapp className="text-2xl" />
               </a>
               <a
-                href="https://instagram.com/tfc.fitness.nashik"
+                href="https://instagram.com/tfc.nashik"
                 target="_blank"
                 rel="noreferrer"
                 className="w-14 h-14 flex items-center justify-center bg-zinc-900 border border-white/5 rounded-2xl hover:bg-gradient-to-tr hover:from-[#f09433] hover:via-[#dc2743] hover:to-[#bc1888] text-white transition-all duration-300 hover:-translate-y-2 shadow-xl"

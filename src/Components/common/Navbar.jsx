@@ -1,11 +1,25 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { FaWhatsapp, FaBars, FaTimes } from "react-icons/fa";
-import tfclogo from "../../assets/tfcweb.png"
+import tfclogo from "../../assets/tfcweb.png";
 
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+
+  // === NEW: BODY SCROLL LOCK LOGIC ===
+  useEffect(() => {
+    if (isMenuOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "unset";
+    }
+    
+    // Cleanup function to ensure scroll is restored if component unmounts
+    return () => {
+      document.body.style.overflow = "unset";
+    };
+  }, [isMenuOpen]);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -18,8 +32,8 @@ export default function Navbar() {
   const navLinks = [
     { name: "Home", id: "home" },
     { name: "Programs", id: "features" },
-    { name: "Packages", id: "packages" },
     { name: "Lab", id: "exercises" },
+    { name: "Packages", id: "packages" },
     { name: "About", id: "about" },
   ];
 
@@ -33,19 +47,19 @@ export default function Navbar() {
     if (section) {
       section.scrollIntoView({ behavior: "smooth", block: "start" });
     }
-    setIsMenuOpen(false);
+    setIsMenuOpen(false); // This will trigger the useEffect to unlock scroll
   };
 
   return (
     <>
-      {/* ELITE WHATSAPP PULSE BUTTON */}
+      {/* WhatsApp Button */}
       <motion.button
         initial={{ scale: 0 }}
         animate={{ scale: 1 }}
         whileHover={{ scale: 1.1, rotate: 8 }}
         whileTap={{ scale: 0.9 }}
         onClick={handleWhatsAppClick}
-        className="fixed bottom-8 right-8 z-50 bg-[#25D366] text-white rounded-2xl p-4 shadow-[0_0_20px_rgba(37,211,102,0.4)] hover:shadow-[0_0_30px_rgba(37,211,102,0.6)] transition-all flex items-center justify-center border border-white/10"
+        className="fixed bottom-8 right-8 z-50 bg-[#25D366] text-white rounded-2xl p-4 shadow-lg flex items-center justify-center border border-white/10"
       >
         <FaWhatsapp className="w-7 h-7" />
         <span className="absolute inset-0 rounded-2xl bg-[#25D366] animate-ping opacity-20 pointer-events-none"></span>
@@ -61,7 +75,6 @@ export default function Navbar() {
         }`}
       >
         <div className="container mx-auto px-6 flex justify-between items-center">
-          {/* LOGO AREA */}
           <motion.button
             whileHover={{ scale: 1.05 }}
             onClick={() => scrollToSection("home")}
@@ -74,7 +87,7 @@ export default function Navbar() {
             />
           </motion.button>
 
-          {/* DESKTOP ELITE MENU */}
+          {/* Desktop Menu */}
           <div className="hidden md:flex items-center gap-10">
             {navLinks.map((link) => (
               <button
@@ -86,7 +99,6 @@ export default function Navbar() {
                 <span className="absolute -bottom-2 left-0 w-0 h-[2px] bg-orange-600 transition-all group-hover:w-full" />
               </button>
             ))}
-            
             <button
               onClick={() => scrollToSection("packages")}
               className="px-6 py-2 bg-white text-black text-[10px] font-black uppercase tracking-widest italic rounded-full hover:bg-orange-600 hover:text-white transition-all transform hover:scale-105 active:scale-95"
@@ -95,7 +107,7 @@ export default function Navbar() {
             </button>
           </div>
 
-          {/* MOBILE TOGGLE */}
+          {/* Mobile Toggle Button */}
           <button
             className="md:hidden z-[110] p-2 text-white"
             onClick={() => setIsMenuOpen(!isMenuOpen)}
@@ -104,7 +116,7 @@ export default function Navbar() {
           </button>
         </div>
 
-        {/* FULL SCREEN MOBILE OVERLAY */}
+        {/* Full Screen Mobile Overlay */}
         <AnimatePresence>
           {isMenuOpen && (
             <motion.div
@@ -112,9 +124,9 @@ export default function Navbar() {
               animate={{ x: 0 }}
               exit={{ x: "100%" }}
               transition={{ type: "spring", damping: 25, stiffness: 200 }}
-              className="fixed inset-0 bg-black z-[105] flex flex-col justify-center p-12 overflow-hidden"
+              // Ensure this is fixed and covers the whole screen to prevent leaks
+              className="fixed inset-0 bg-black z-[105] flex flex-col justify-center p-12 overflow-hidden h-screen"
             >
-              {/* Overlay Watermark */}
               <h2 className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-[15rem] font-black text-white/[0.03] italic uppercase pointer-events-none select-none">
                 TFC
               </h2>
@@ -133,19 +145,6 @@ export default function Navbar() {
                   </motion.button>
                 ))}
               </div>
-
-              <motion.div 
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 0.5 }}
-                className="mt-20 pt-10 border-t border-white/10 flex flex-col gap-4"
-              >
-                <p className="text-zinc-500 text-xs font-bold uppercase tracking-[0.3em]">Quick Connect</p>
-                <div className="flex gap-6">
-                   <a href="https://instagram.com/tfc.fitness.nashik" className="text-white hover:text-orange-500 text-2xl transition-colors">Instagram</a>
-                   <a href="tel:+919922525245" className="text-white hover:text-orange-500 text-2xl transition-colors">Call</a>
-                </div>
-              </motion.div>
             </motion.div>
           )}
         </AnimatePresence>

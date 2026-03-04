@@ -8,36 +8,31 @@ import {
   FaFire,
   FaClock,
   FaMapMarkerAlt,
+  FaAppleAlt,
 } from "react-icons/fa";
 
 export default function Home() {
   
-  // IMPROVED SCROLL FUNCTION
   const enterTheLab = () => {
-    // Look for the ID we set in the Packages component
     const section = document.getElementById("packages");
-    
     if (section) {
-      // Offset calculation for fixed navbars (adjust 80 to your navbar height)
       const yOffset = -80; 
       const y = section.getBoundingClientRect().top + window.pageYOffset + yOffset;
-
       window.scrollTo({ top: y, behavior: "smooth" });
-    } else {
-      console.warn("Section 'packages' not found. Ensure id='packages' exists in your Packages component.");
     }
   };
 
+  // UPDATED WITH IMAGE DATA
   const leftStats = [
-    { value: "150+", label: "Elite Athletes", icon: <FaUserFriends />, color: "text-orange-500" },
-    { value: "10+", label: "Pro Coaches", icon: <FaDumbbell />, color: "text-white" },
-    { value: "10+", label: "Premium Zones", icon: <FaMapMarkerAlt />, color: "text-orange-500" },
+    { value: "14k+", label: "Sq Ft Floor", icon: <FaMapMarkerAlt />, color: "text-orange-500" },
+    { value: "Certified", label: "Pro Trainers", icon: <FaDumbbell />, color: "text-white" },
+    { value: "15+", label: "Premium Amenities", icon: <FaUserFriends />, color: "text-orange-500" },
   ];
 
   const rightStats = [
-    { value: "98%", label: "Success Rate", icon: <FaChartLine />, color: "text-white" },
-    { value: "1M+", label: "Cals Burned", icon: <FaFire />, color: "text-orange-500" },
-    { value: "24/7", label: "Athlete Support", icon: <FaClock />, color: "text-white" },
+    { value: "In-House", label: "Cafe & Steam", icon: <FaFire />, color: "text-white" },
+    { value: "Personal", label: "Dietitians", icon: <FaAppleAlt />, color: "text-orange-500" },
+    { value: "Elite", label: "Gaming Zone", icon: <FaClock />, color: "text-white" },
   ];
 
   return (
@@ -71,7 +66,7 @@ export default function Home() {
             className="mb-6 px-4 py-1.5 border border-orange-500/30 rounded-full bg-orange-500/10 backdrop-blur-md"
           >
             <span className="text-orange-500 font-black tracking-[0.4em] uppercase text-[10px]">
-              Nashik's Premier Fitness Lab
+              Nashik's Premier 14,000 Sq Ft Lab
             </span>
           </motion.div>
 
@@ -111,7 +106,7 @@ export default function Home() {
         </div>
       </div>
 
-      {/* Floating Side Stats */}
+      {/* Floating Side Stats - Fully Integrated Data */}
       <div className="hidden lg:block">
         <div className="absolute left-12 top-1/2 -translate-y-1/2 space-y-6">
           {leftStats.map((stat, i) => (
@@ -120,11 +115,11 @@ export default function Home() {
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 1.5 + i * 0.1 }}
               key={i}
-              className="bg-zinc-900/40 backdrop-blur-xl border border-white/5 p-5 rounded-2xl w-48 shadow-2xl"
+              className="bg-zinc-900/40 backdrop-blur-xl border border-white/5 p-5 rounded-2xl w-52 shadow-2xl"
             >
               <div className={`text-2xl mb-1 ${stat.color}`}>{stat.icon}</div>
-              <div className="text-2xl font-black text-white italic">{stat.value}</div>
-              <div className="text-[10px] font-bold text-zinc-500 uppercase tracking-widest">{stat.label}</div>
+              <div className="text-2xl font-black text-white italic uppercase tracking-tighter leading-none">{stat.value}</div>
+              <div className="text-[10px] font-bold text-zinc-500 uppercase tracking-widest mt-1">{stat.label}</div>
             </motion.div>
           ))}
         </div>
@@ -136,11 +131,11 @@ export default function Home() {
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 1.5 + i * 0.1 }}
               key={i}
-              className="bg-zinc-900/40 backdrop-blur-xl border border-white/5 p-5 rounded-2xl w-48 text-right shadow-2xl"
+              className="bg-zinc-900/40 backdrop-blur-xl border border-white/5 p-5 rounded-2xl w-52 text-right shadow-2xl"
             >
               <div className={`text-2xl mb-1 flex justify-end ${stat.color}`}>{stat.icon}</div>
-              <div className="text-2xl font-black text-white italic">{stat.value}</div>
-              <div className="text-[10px] font-bold text-zinc-500 uppercase tracking-widest">{stat.label}</div>
+              <div className="text-2xl font-black text-white italic uppercase tracking-tighter leading-none">{stat.value}</div>
+              <div className="text-[10px] font-bold text-zinc-500 uppercase tracking-widest mt-1">{stat.label}</div>
             </motion.div>
           ))}
         </div>

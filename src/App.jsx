@@ -6,6 +6,7 @@ import Packages from "./Components/Pages/Packages";
 import About from "./Components/Pages/About";
 import Exercises from "./Components/Pages/Exercises";
 import Join from "./Components/Pages/Join";
+import Amenities from "./Components/Pages/Amenities";
 // import Testimonials from "./Components/Pages/testimonials";
 
 
@@ -16,6 +17,7 @@ export default function App() {
         <Navbar />
         <Home />
         <Features />
+        <Amenities />
         <Packages />
         <Exercises />
         <Join />
