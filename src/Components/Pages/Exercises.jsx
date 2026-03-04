@@ -32,90 +32,45 @@ const exercises = [
     muscle: "Legs & Core",
     guide: ["Step forward, torso upright", "Back knee near ground", "Front knee behind toe", "Push back to start"],
   },
-  {
-    name: "Push-Ups",
-    img: "https://images.unsplash.com/photo-1598971639058-fab3c3109a00?auto=format&fit=crop&w=800&q=80",
-    muscle: "Upper Body",
-    guide: ["Hands under shoulders", "Body in straight line", "Elbows tucked in", "Full range of motion"],
-  },
-  {
-    name: "Overhead Press",
-    img: "https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?auto=format&fit=crop&w=800&q=80",
-    muscle: "Shoulders",
-    guide: ["Core tight, glutes squeezed", "Head moves back slightly", "Press bar vertically", "Lock out at top"],
-  },
 ];
 
-// Duplicate for infinite loop
-const carouselExercises = [...exercises, ...exercises];
+// Tripling the array for infinite-feeling manual scroll
+const infiniteExercises = [...exercises, ...exercises, ...exercises];
 
-// Individual Card Component to handle Flip State
 const ExerciseCard = ({ exercise }) => {
   const [isFlipped, setIsFlipped] = useState(false);
 
   return (
-    <div
-      className="w-56 sm:w-64 md:w-80 h-72 sm:h-80 md:h-96 flex-shrink-0 cursor-pointer group perspective-1000"
-      onClick={() => setIsFlipped(!isFlipped)}
-      onMouseLeave={() => setIsFlipped(false)} // Auto flip back when mouse leaves
-    >
+    <div className="w-[300px] md:w-[380px] h-[450px] md:h-[520px] flex-shrink-0 snap-center perspective-1000">
       <motion.div
-        className="relative w-full h-full duration-500 preserve-3d"
-        animate={{ rotateY: isFlipped ? 180 : 0 }}
-        transition={{ duration: 0.6, type: "spring", stiffness: 260, damping: 20 }}
+        className="relative w-full h-full cursor-pointer"
         style={{ transformStyle: "preserve-3d" }}
+        animate={{ rotateY: isFlipped ? 180 : 0 }}
+        transition={{ type: "spring", stiffness: 200, damping: 20 }}
+        onClick={() => setIsFlipped(!isFlipped)}
       >
-        {/* === FRONT SIDE === */}
-        <div 
-          className="absolute inset-0 w-full h-full backface-hidden rounded-2xl overflow-hidden border border-gray-800 bg-gray-900"
-          style={{ backfaceVisibility: "hidden" }}
-        >
-          <img
-            src={exercise.img}
-            alt={exercise.name}
-            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110 opacity-80"
-            loading="lazy"
-            decoding="async"
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent" />
-          
-          <div className="absolute bottom-0 left-0 p-4 sm:p-5 md:p-6 w-full">
-            <span className="inline-block px-2 sm:px-3 py-0.5 sm:py-1 mb-1 sm:mb-2 text-[10px] sm:text-xs font-bold tracking-wider text-orange-400 uppercase bg-orange-500/10 rounded-full border border-orange-500/20 backdrop-blur-md">
+        {/* Front */}
+        <div className="absolute inset-0 w-full h-full rounded-[2.5rem] overflow-hidden border border-white/5 bg-zinc-900 shadow-2xl" style={{ backfaceVisibility: "hidden" }}>
+          <img src={exercise.img} className="w-full h-full object-cover opacity-60" alt={exercise.name} />
+          <div className="absolute inset-0 bg-gradient-to-t from-black via-black/10 to-transparent" />
+          <div className="absolute bottom-0 left-0 p-10 w-full text-left">
+            <span className="text-[10px] font-black tracking-widest text-orange-500 uppercase bg-black/50 backdrop-blur-md px-3 py-1 rounded-full mb-4 inline-block border border-orange-500/30">
               {exercise.muscle}
             </span>
-            <h3 className="text-lg sm:text-xl md:text-2xl font-bold text-white mb-1">{exercise.name}</h3>
-            <p className="text-[10px] sm:text-xs text-gray-400 mt-1 sm:mt-2 flex items-center gap-1 group-hover:text-orange-300 transition-colors">
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4 animate-pulse">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M15.042 21.672 13.684 16.6m0 0-2.51 2.225.569-9.47 5.227 7.917-3.286-.672Zm-7.518-.267A8.25 8.25 0 1 1 20.25 10.5M8.288 14.212A5.25 5.25 0 1 1 17.25 10.5" />
-              </svg>
-              Tap for Technique
-            </p>
+            <h3 className="text-4xl md:text-5xl font-black text-white italic uppercase tracking-tighter leading-none">{exercise.name}</h3>
           </div>
         </div>
 
-        {/* === BACK SIDE (Details) === */}
-        <div
-          className="absolute inset-0 w-full h-full backface-hidden rounded-2xl overflow-hidden bg-gray-900 border border-orange-500/30 p-6 flex flex-col justify-center"
-          style={{ backfaceVisibility: "hidden", transform: "rotateY(180deg)" }}
-        >
-          <div className="absolute inset-0 bg-gradient-to-br from-gray-900 to-black opacity-95" />
-          
-          <div className="relative z-10 text-center">
-            <h3 className="text-base sm:text-lg md:text-xl font-bold text-orange-400 mb-3 sm:mb-4 uppercase tracking-widest border-b border-gray-700 pb-1 sm:pb-2">
-              Technique Guide
-            </h3>
-            <ul className="text-left space-y-2 sm:space-y-3">
-              {exercise.guide.map((step, idx) => (
-                <li key={idx} className="flex items-start text-gray-300 text-xs sm:text-sm">
-                  <span className="text-orange-500 mr-1.5 sm:mr-2 mt-0.5">✓</span>
-                  {step}
-                </li>
-              ))}
-            </ul>
-            <div className="mt-4 sm:mt-6 text-[10px] sm:text-xs text-gray-500 italic">
-              Tap to flip back
-            </div>
-          </div>
+        {/* Back */}
+        <div className="absolute inset-0 w-full h-full rounded-[2.5rem] bg-zinc-950 border-2 border-orange-600/30 p-10 flex flex-col justify-center" style={{ backfaceVisibility: "hidden", transform: "rotateY(180deg)" }}>
+          <h4 className="text-orange-500 font-black italic uppercase text-xl mb-6">Form Guide</h4>
+          <ul className="space-y-4">
+            {exercise.guide.map((step, i) => (
+              <li key={i} className="flex items-start gap-3 text-sm md:text-base text-zinc-300">
+                <span className="text-orange-600 font-bold">/</span> {step}
+              </li>
+            ))}
+          </ul>
         </div>
       </motion.div>
     </div>
@@ -123,134 +78,69 @@ const ExerciseCard = ({ exercise }) => {
 };
 
 export default function Exercises() {
-  const scrollContainerRef = useRef(null);
-  const [isPaused, setIsPaused] = useState(false);
-  const isUserScrollingRef = useRef(false);
-  const lastScrollLeftRef = useRef(0);
+  const scrollRef = useRef(null);
 
+  // Center the scroll on load
   useEffect(() => {
-    const container = scrollContainerRef.current;
-    if (!container) return;
+    if (scrollRef.current) {
+      const cardWidth = 380 + 32; // card width + gap
+      const centerPosition = (scrollRef.current.scrollWidth / 2) - (window.innerWidth / 2) + (cardWidth / 2);
+      scrollRef.current.scrollLeft = centerPosition;
+    }
+  }, []);
 
-    let scrollTimeout;
-    let animationFrameId;
-    let isDragging = false;
-
-    const handleInteractionStart = () => {
-      isDragging = true;
-      isUserScrollingRef.current = true;
-      setIsPaused(true);
-      clearTimeout(scrollTimeout);
-    };
-
-    const handleInteractionEnd = () => {
-      isDragging = false;
-      scrollTimeout = setTimeout(() => {
-        isUserScrollingRef.current = false;
-        setIsPaused(false);
-      }, 2000);
-    };
-
-    const handleScroll = () => {
-      const currentScroll = container.scrollLeft;
-      const scrollDiff = Math.abs(currentScroll - lastScrollLeftRef.current);
-      
-      // If scroll difference is significant, user is scrolling
-      if (scrollDiff > 2 && !isDragging) {
-        handleInteractionStart();
-      }
-      
-      lastScrollLeftRef.current = currentScroll;
-      clearTimeout(scrollTimeout);
-      handleInteractionEnd();
-    };
-
-    // Marquee auto-scroll function
-    const marqueeScroll = () => {
-      if (!isPaused && !isUserScrollingRef.current && container) {
-        const maxScroll = container.scrollWidth - container.clientWidth;
-        const currentScroll = container.scrollLeft;
-        
-        // Reset to start when reaching 50% (since we duplicated the content)
-        if (currentScroll >= maxScroll / 2) {
-          container.scrollLeft = 0;
-        } else {
-          container.scrollLeft += 0.8; // Marquee speed (adjust as needed)
-        }
-      }
-      animationFrameId = requestAnimationFrame(marqueeScroll);
-    };
-
-    container.addEventListener("scroll", handleScroll);
-    container.addEventListener("touchstart", handleInteractionStart, { passive: true });
-    container.addEventListener("mousedown", handleInteractionStart);
-    container.addEventListener("touchend", handleInteractionEnd, { passive: true });
-    container.addEventListener("mouseup", handleInteractionEnd);
-    container.addEventListener("mouseleave", handleInteractionEnd);
-
-    // Start marquee
-    animationFrameId = requestAnimationFrame(marqueeScroll);
-
-    return () => {
-      container.removeEventListener("scroll", handleScroll);
-      container.removeEventListener("touchstart", handleInteractionStart);
-      container.removeEventListener("mousedown", handleInteractionStart);
-      container.removeEventListener("touchend", handleInteractionEnd);
-      container.removeEventListener("mouseup", handleInteractionEnd);
-      container.removeEventListener("mouseleave", handleInteractionEnd);
-      if (animationFrameId) {
-        cancelAnimationFrame(animationFrameId);
-      }
-      clearTimeout(scrollTimeout);
-    };
-  }, [isPaused]);
+  const handleScroll = (direction) => {
+    if (scrollRef.current) {
+      const scrollAmount = 412; // card width + gap
+      scrollRef.current.scrollBy({
+        left: direction === "left" ? -scrollAmount : scrollAmount,
+        behavior: "smooth",
+      });
+    }
+  };
 
   return (
-    <section
-      id="exercises"
-      className="min-h-screen bg-black py-20 relative overflow-hidden font-montserrat flex flex-col justify-center"
-    >
-      {/* Background Ambience */}
-      <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-gray-900 via-black to-black opacity-50 z-0"></div>
-
-      <div className="relative z-10 max-w-7xl mx-auto w-full px-4 mb-8 sm:mb-10 md:mb-12">
-        <div className="text-center mb-6 sm:mb-8 md:mb-10 space-y-3 sm:space-y-4">
-          <motion.h2
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-white to-gray-500 px-2"
-          >
-            Train Smarter,
-            <span className="block mt-1 sm:mt-2 text-orange-500">Unleash Potential</span>
-          </motion.h2>
-          <p className="text-gray-400 text-sm sm:text-base px-4">Tap on any card to view the technique guide.</p>
+    <section id="exercises" className="py-24 bg-black overflow-hidden relative min-h-screen flex flex-col justify-center">
+      <div className="max-w-7xl mx-auto px-6 mb-20 text-center">
+        <h2 className="text-7xl md:text-9xl font-black text-white italic uppercase tracking-tighter leading-none opacity-20 absolute top-10 left-1/2 -translate-x-1/2 whitespace-nowrap select-none">
+          PERFORMANCE
+        </h2>
+        <div className="relative z-10">
+          <span className="text-orange-500 font-black tracking-[0.5em] uppercase text-xs">The Movement Archive</span>
+          <h3 className="text-5xl md:text-7xl font-black text-white italic uppercase tracking-tighter">ELITE <span className="text-orange-600">LAB</span></h3>
         </div>
       </div>
 
-      {/* Infinite Scroll Container */}
-      <div className="relative w-full border-y border-gray-800/50 bg-gray-900/20 backdrop-blur-sm py-8 sm:py-10 md:py-12 overflow-hidden">
-        {/* Scrollable Container with Marquee */}
+      {/* Navigation Buttons */}
+      <div className="hidden lg:block">
+        <button onClick={() => handleScroll("left")} className="absolute left-10 top-1/2 -translate-y-1/2 z-50 p-6 rounded-full bg-white/5 hover:bg-orange-600 border border-white/10 transition-all">
+          <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="4" d="M15 19l-7-7 7-7"/></svg>
+        </button>
+        <button onClick={() => handleScroll("right")} className="absolute right-10 top-1/2 -translate-y-1/2 z-50 p-6 rounded-full bg-white/5 hover:bg-orange-600 border border-white/10 transition-all">
+          <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="4" d="M9 5l7 7-7 7"/></svg>
+        </button>
+      </div>
+
+      <div className="relative group">
         <div 
-          ref={scrollContainerRef}
-          className="flex overflow-x-auto scrollbar-hide snap-x snap-mandatory scroll-smooth"
-          style={{ 
-            scrollbarWidth: 'none',
-            msOverflowStyle: 'none',
-            WebkitOverflowScrolling: 'touch'
-          }}
+          ref={scrollRef}
+          className="flex gap-8 overflow-x-auto pb-24 scrollbar-hide snap-x snap-mandatory"
+          style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
         >
-          <div 
-            className="flex gap-4 sm:gap-6 md:gap-8 px-2 sm:px-4"
-            style={{ width: "max-content" }}
-          >
-            {carouselExercises.map((exercise, index) => (
-              <div key={`${exercise.name}-${index}`} className="snap-start flex-shrink-0">
-                <ExerciseCard exercise={exercise} />
-              </div>
-            ))}
-          </div>
+          {infiniteExercises.map((exercise, index) => (
+            <ExerciseCard key={index} exercise={exercise} />
+          ))}
         </div>
+
+        {/* Massive Side Fades */}
+        <div className="absolute inset-y-0 left-0 w-[20%] bg-gradient-to-r from-black to-transparent z-10 pointer-events-none" />
+        <div className="absolute inset-y-0 right-0 w-[20%] bg-gradient-to-l from-black to-transparent z-10 pointer-events-none" />
+      </div>
+
+      <div className="text-center opacity-40">
+         <p className="text-zinc-500 text-[10px] font-black uppercase tracking-[0.6em]">
+           Explore the infinite library
+         </p>
       </div>
     </section>
   );

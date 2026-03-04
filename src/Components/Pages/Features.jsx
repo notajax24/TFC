@@ -5,315 +5,154 @@ import { FaCheckCircle } from "react-icons/fa";
 const features = [
   {
     title: "Cardio Training",
-    desc: "Boost your endurance with our state-of-the-art equipment",
+    desc: "Boost your endurance with state-of-the-art equipment",
     logo: "❤️‍🔥",
-    details: [
-      "Improve heart health",
-      "Burn calories efficiently",
-      "Increase overall stamina",
-      "Advanced treadmills & ellipticals",
-    ],
+    details: ["Improve heart health", "Burn calories efficiently", "Advanced treadmills", "High-stamina focus"],
   },
   {
     title: "Strength Build",
     desc: "Build muscle mass with expert-guided weight training",
     logo: "💪",
-    details: [
-      "Hypertrophy focused programs",
-      "Free weights & machines",
-      "Compound movement mastery",
-      "Progressive overload guidance",
-    ],
+    details: ["Hypertrophy programs", "Free weights & machines", "Compound movements", "Progressive overload"],
   },
   {
     title: "Fat Loss",
-    desc: "Targeted workouts for effective fat burning and weight loss",
+    desc: "Targeted workouts for effective calorie burning",
     logo: "🔥",
-    details: [
-      "High caloric expenditure",
-      "Metabolism boosting circuits",
-      "Mix of resistance & cardio",
-      "Sustainable results focus",
-    ],
+    details: ["High calorie burn", "Metabolism boosting", "Mix of HIIT & Cardio", "Sustainable results"],
   },
   {
     title: "HIIT Workouts",
     desc: "High-intensity interval training for maximum results",
     logo: "⚡",
-    details: [
-      "Short, intense bursts",
-      "Maximum calorie burn",
-      "Improved cardiovascular fitness",
-      "Afterburn effect (EPOC)",
-    ],
+    details: ["Intense bursts", "EPOC Afterburn effect", "Max efficiency", "Cardio conditioning"],
   },
   {
-    title: "Hill Climbing",
-    desc: "Simulated elevation training for leg strength",
-    logo: "⛰️",
-    details: [
-      "Build serious leg strength",
-      "Simulate real-world terrain",
-      "Low-impact high resistance",
-      "Great for glute development",
-    ],
-  },
-  {
-    title: "Flexibility",
-    desc: "Yoga and stretching programs for mobility",
-    logo: "🧘",
-    details: [
-      "Improve range of motion",
-      "Reduce risk of injury",
-      "Better posture & alignment",
-      "Active recovery sessions",
-    ],
-  },
-  {
-    title: "MMA",
-    desc: "MMA/Boxing and technique training",
+    title: "MMA / Boxing",
+    desc: "Striking and technique training for full-body power",
     logo: "🥊",
-    details: [
-      "Striking & grappling basics",
-      "Full-body conditioning",
-      "Self-defense skills",
-      "High-focus discipline",
-    ],
+    details: ["Striking basics", "Self-defense skills", "Discipline focus", "High-intensity drills"],
   },
 ];
 
-// Duplicate for infinite loop
-const carouselFeatures = [...features, ...features];
+const infiniteFeatures = [...features, ...features, ...features];
 
-// === Individual Flip Card Component ===
 const FeatureCard = ({ feature }) => {
   const [isFlipped, setIsFlipped] = useState(false);
 
   return (
-    <div
-      className="w-64 sm:w-72 md:w-80 h-80 sm:h-88 md:h-96 flex-shrink-0 relative cursor-pointer group perspective-1000 z-0 hover:z-10"
-      onClick={() => setIsFlipped(!isFlipped)}
-      onMouseLeave={() => setIsFlipped(false)} // Auto flip back when mouse leaves
-    >
+    <div className="w-[300px] md:w-[380px] h-[450px] md:h-[520px] flex-shrink-0 snap-center perspective-1000">
       <motion.div
-        className="w-full h-full relative duration-500 preserve-3d"
-        animate={{ rotateY: isFlipped ? 180 : 0 }}
-        transition={{ type: "spring", stiffness: 260, damping: 20 }}
+        className="relative w-full h-full cursor-pointer"
         style={{ transformStyle: "preserve-3d" }}
+        animate={{ rotateY: isFlipped ? 180 : 0 }}
+        transition={{ type: "spring", stiffness: 200, damping: 20 }}
+        onClick={() => setIsFlipped(!isFlipped)}
       >
-        {/* ========= FRONT SIDE ========= */}
-        <div
-          className="absolute inset-0 w-full h-full backface-hidden rounded-3xl p-1 bg-gradient-to-br from-gray-700 to-gray-900 group-hover:from-orange-500 group-hover:to-red-600 transition-colors duration-300 shadow-lg"
-          style={{ backfaceVisibility: "hidden" }}
-        >
-          <div className="bg-gray-900 h-full w-full rounded-[16px] sm:rounded-[20px] p-4 sm:p-6 md:p-8 flex flex-col items-center justify-center text-center relative overflow-hidden">
-            {/* Background Glow */}
-            <div className="absolute top-0 w-full h-full bg-gradient-to-b from-gray-800/20 to-transparent pointer-events-none" />
+        {/* Front */}
+        <div className="absolute inset-0 w-full h-full rounded-[2.5rem] overflow-hidden border border-white/5 bg-zinc-900 shadow-2xl" style={{ backfaceVisibility: "hidden" }}>
+          <div className="h-full w-full p-10 flex flex-col items-center justify-center text-center relative">
+             <div className="absolute top-1/4 w-32 h-32 bg-orange-500/10 rounded-full blur-[60px] pointer-events-none" />
+             
+             <div className="w-24 h-24 rounded-full bg-white/5 border border-white/10 backdrop-blur-md flex items-center justify-center text-5xl mb-8 shadow-xl">
+               {feature.logo}
+             </div>
 
-            {/* Icon */}
-            <div className="w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 rounded-full bg-gray-800 border border-gray-700 flex items-center justify-center text-3xl sm:text-4xl md:text-5xl mb-4 sm:mb-5 md:mb-6 shadow-xl group-hover:scale-110 group-hover:border-orange-500/50 transition-all duration-300">
-              {feature.logo}
-            </div>
-
-            {/* Text */}
-            <h3 className="text-lg sm:text-xl md:text-2xl font-bold text-white mb-2 sm:mb-3 group-hover:text-orange-400 transition-colors px-2">
+            <h3 className="text-3xl md:text-4xl font-black text-white italic uppercase tracking-tighter leading-none mb-4">
               {feature.title}
             </h3>
-            <p className="text-gray-400 text-xs sm:text-sm leading-relaxed group-hover:text-gray-300 px-2">
+            <p className="text-gray-400 text-sm leading-relaxed px-4">
               {feature.desc}
             </p>
-
-            {/* Tap Indicator */}
-            <div className="mt-auto pt-4 opacity-60 group-hover:opacity-100 transition-opacity flex items-center gap-1 text-xs text-orange-500 font-semibold uppercase tracking-wider">
-              <span>Tap for details</span>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth={2}
-                stroke="currentColor"
-                className="w-4 h-4 animate-pulse"
-              >
-                <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
-              </svg>
+            
+            <div className="absolute bottom-8 flex items-center gap-2 text-orange-500/50 text-[10px] font-black uppercase tracking-widest">
+                <span className="w-1.5 h-1.5 rounded-full bg-orange-600 animate-pulse" />
+                Tap for benefits
             </div>
           </div>
         </div>
 
-        {/* ========= BACK SIDE (Details) ========= */}
-        <div
-          className="absolute inset-0 w-full h-full backface-hidden rounded-3xl p-1 bg-gradient-to-bl from-orange-600 to-red-800 shadow-xl"
-          style={{ backfaceVisibility: "hidden", transform: "rotateY(180deg)" }}
-        >
-          <div className="bg-gray-900/95 h-full w-full rounded-[16px] sm:rounded-[20px] p-4 sm:p-6 md:p-8 flex flex-col relative overflow-hidden backdrop-blur-sm">
-            <h3 className="text-base sm:text-lg md:text-xl font-bold text-orange-400 mb-4 sm:mb-5 md:mb-6 pb-2 border-b border-orange-500/30 tracking-wider uppercase text-center">
-              Key Benefits
-            </h3>
-            
-            <ul className="space-y-2 sm:space-y-3 md:space-y-4 flex-1 flex flex-col justify-center">
-              {feature.details.map((detail, idx) => (
-                <li key={idx} className="flex items-start gap-2 sm:gap-3 text-left">
-                  <FaCheckCircle className="text-orange-500 mt-0.5 sm:mt-1 flex-shrink-0" size={14} />
-                  <span className="text-gray-200 text-xs sm:text-sm font-medium leading-snug">{detail}</span>
-                </li>
-              ))}
-            </ul>
-            
-            <div className="mt-auto pt-4 text-center text-xs text-gray-500 italic">
-              Tap to flip back
-            </div>
-          </div>
+        {/* Back */}
+        <div className="absolute inset-0 w-full h-full rounded-[2.5rem] bg-zinc-950 border-2 border-orange-600/30 p-10 flex flex-col justify-center" style={{ backfaceVisibility: "hidden", transform: "rotateY(180deg)" }}>
+          <h4 className="text-orange-500 font-black italic uppercase text-xl mb-6 border-b border-white/10 pb-2">Advantages</h4>
+          <ul className="space-y-4">
+            {feature.details.map((detail, i) => (
+              <li key={i} className="flex items-start gap-3 text-sm md:text-base text-zinc-300">
+                <FaCheckCircle className="text-orange-600 mt-1 flex-shrink-0" />
+                <span>{detail}</span>
+              </li>
+            ))}
+          </ul>
         </div>
       </motion.div>
     </div>
   );
 };
 
-// === Main Component ===
 export default function Features() {
-  const scrollContainerRef = useRef(null);
-  const [isPaused, setIsPaused] = useState(false);
-  const isUserScrollingRef = useRef(false);
-  const lastScrollLeftRef = useRef(0);
+  const scrollRef = useRef(null);
 
+  // Center the scroll on load
   useEffect(() => {
-    const container = scrollContainerRef.current;
-    if (!container) return;
+    if (scrollRef.current) {
+      const cardWidth = 380 + 32; // card width + gap
+      const centerPosition = (scrollRef.current.scrollWidth / 2) - (window.innerWidth / 2) + (cardWidth / 2);
+      scrollRef.current.scrollLeft = centerPosition;
+    }
+  }, []);
 
-    let scrollTimeout;
-    let animationFrameId;
-    let isDragging = false;
-
-    const handleInteractionStart = () => {
-      isDragging = true;
-      isUserScrollingRef.current = true;
-      setIsPaused(true);
-      clearTimeout(scrollTimeout);
-    };
-
-    const handleInteractionEnd = () => {
-      isDragging = false;
-      scrollTimeout = setTimeout(() => {
-        isUserScrollingRef.current = false;
-        setIsPaused(false);
-      }, 2000);
-    };
-
-    const handleScroll = () => {
-      const currentScroll = container.scrollLeft;
-      const scrollDiff = Math.abs(currentScroll - lastScrollLeftRef.current);
-      
-      // If scroll difference is significant, user is scrolling
-      if (scrollDiff > 2 && !isDragging) {
-        handleInteractionStart();
-      }
-      
-      lastScrollLeftRef.current = currentScroll;
-      clearTimeout(scrollTimeout);
-      handleInteractionEnd();
-    };
-
-    // Marquee auto-scroll function
-    const marqueeScroll = () => {
-      if (!isPaused && !isUserScrollingRef.current && container) {
-        const maxScroll = container.scrollWidth - container.clientWidth;
-        const currentScroll = container.scrollLeft;
-        
-        // Reset to start when reaching 50% (since we duplicated the content)
-        if (currentScroll >= maxScroll / 2) {
-          container.scrollLeft = 0;
-        } else {
-          container.scrollLeft += 1; // Marquee speed (adjust as needed)
-        }
-      }
-      animationFrameId = requestAnimationFrame(marqueeScroll);
-    };
-
-    container.addEventListener("scroll", handleScroll);
-    container.addEventListener("touchstart", handleInteractionStart, { passive: true });
-    container.addEventListener("mousedown", handleInteractionStart);
-    container.addEventListener("touchend", handleInteractionEnd, { passive: true });
-    container.addEventListener("mouseup", handleInteractionEnd);
-    container.addEventListener("mouseleave", handleInteractionEnd);
-
-    // Start marquee
-    animationFrameId = requestAnimationFrame(marqueeScroll);
-
-    return () => {
-      container.removeEventListener("scroll", handleScroll);
-      container.removeEventListener("touchstart", handleInteractionStart);
-      container.removeEventListener("mousedown", handleInteractionStart);
-      container.removeEventListener("touchend", handleInteractionEnd);
-      container.removeEventListener("mouseup", handleInteractionEnd);
-      container.removeEventListener("mouseleave", handleInteractionEnd);
-      if (animationFrameId) {
-        cancelAnimationFrame(animationFrameId);
-      }
-      clearTimeout(scrollTimeout);
-    };
-  }, [isPaused]);
+  const handleScroll = (direction) => {
+    if (scrollRef.current) {
+      const scrollAmount = 412; // card width + gap
+      scrollRef.current.scrollBy({
+        left: direction === "left" ? -scrollAmount : scrollAmount,
+        behavior: "smooth",
+      });
+    }
+  };
 
   return (
-    <section
-      id="features"
-      className="min-h-[85vh] bg-black py-20 relative overflow-hidden font-montserrat flex flex-col justify-center"
-    >
-      {/* Background Ambience */}
-      <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(ellipse_at_bottom,_var(--tw-gradient-stops))] from-gray-900 via-black to-black opacity-50 z-0"></div>
+    <section id="features" className="py-24 bg-black overflow-hidden relative min-h-screen flex flex-col justify-center">
+      {/* Background Large Text */}
+      <h2 className="text-7xl md:text-9xl font-black text-white italic uppercase tracking-tighter leading-none opacity-10 absolute top-10 left-1/2 -translate-x-1/2 whitespace-nowrap select-none pointer-events-none">
+        CAPABILITIES
+      </h2>
 
-      <div className="relative z-10 max-w-7xl mx-auto w-full px-4 mb-8 sm:mb-10 md:mb-12">
-        {/* Heading Section */}
-        <div className="text-center space-y-3 sm:space-y-4">
-          <motion.h2
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-white to-gray-500 px-2"
-          >
-            Our Training
-            <span className="block mt-1 sm:mt-2 text-orange-500">Programs</span>
-          </motion.h2>
-          <motion.p
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            transition={{ delay: 0.2, duration: 0.6 }}
-            className="text-gray-400 text-sm sm:text-base md:text-lg max-w-2xl mx-auto px-4"
-          >
-            Tap on any card to explore the benefits of our diverse training modules.
-          </motion.p>
-        </div>
+      <div className="max-w-7xl mx-auto px-6 mb-20 text-center relative z-10">
+        <span className="text-orange-500 font-black tracking-[0.5em] uppercase text-xs">Our Core Expertise</span>
+        <h3 className="text-5xl md:text-7xl font-black text-white italic uppercase tracking-tighter">PREMIUM <span className="text-orange-600">PROGRAMS</span></h3>
       </div>
 
-      {/* Infinite Scroll Container Outer Wrapper */}
-      <div className="relative w-full border-y border-gray-800/50 bg-gray-900/20 backdrop-blur-sm">
-        {/* Faded edges mask */}
-        <div className="absolute inset-y-0 left-0 w-20 md:w-40 bg-gradient-to-r from-black to-transparent z-20 pointer-events-none" />
-        <div className="absolute inset-y-0 right-0 w-20 md:w-40 bg-gradient-to-l from-black to-transparent z-20 pointer-events-none" />
+      {/* Navigation Buttons */}
+      <div className="hidden lg:block">
+        <button onClick={() => handleScroll("left")} className="absolute left-10 top-1/2 -translate-y-1/2 z-50 p-6 rounded-full bg-white/5 hover:bg-orange-600 border border-white/10 transition-all group">
+          <svg className="w-6 h-6 text-white group-hover:scale-110" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="4" d="M15 19l-7-7 7-7"/></svg>
+        </button>
+        <button onClick={() => handleScroll("right")} className="absolute right-10 top-1/2 -translate-y-1/2 z-50 p-6 rounded-full bg-white/5 hover:bg-orange-600 border border-white/10 transition-all group">
+          <svg className="w-6 h-6 text-white group-hover:scale-110" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="4" d="M9 5l7 7-7 7"/></svg>
+        </button>
+      </div>
 
-        {/* Scrollable Container with Marquee */}
-        <div className="relative py-8 sm:py-12 md:py-16 overflow-hidden">
-          {/* Manual Scroll Container */}
-          <div 
-            ref={scrollContainerRef}
-            className="flex overflow-x-auto scrollbar-hide items-center snap-x snap-mandatory scroll-smooth"
-            style={{ 
-              scrollbarWidth: 'none',
-              msOverflowStyle: 'none',
-              WebkitOverflowScrolling: 'touch'
-            }}
-          >
-            <div 
-              className="flex gap-4 sm:gap-6 md:gap-8 items-center"
-              style={{ width: "max-content" }}
-            >
-              {carouselFeatures.map((feature, index) => (
-                <div key={`${feature.title}-${index}`} className="snap-start flex-shrink-0">
-                  <FeatureCard feature={feature} />
-                </div>
-              ))}
-            </div>
-          </div>
+      <div className="relative group">
+        <div 
+          ref={scrollRef}
+          className="flex gap-8 overflow-x-auto pb-24 scrollbar-hide snap-x snap-mandatory"
+          style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+        >
+          {infiniteFeatures.map((feature, index) => (
+            <FeatureCard key={index} feature={feature} />
+          ))}
         </div>
+
+        {/* Cinematic Side Fades */}
+        <div className="absolute inset-y-0 left-0 w-[20%] bg-gradient-to-r from-black to-transparent z-10 pointer-events-none" />
+        <div className="absolute inset-y-0 right-0 w-[20%] bg-gradient-to-l from-black to-transparent z-10 pointer-events-none" />
+      </div>
+
+      <div className="text-center opacity-40">
+         <p className="text-zinc-500 text-[10px] font-black uppercase tracking-[0.6em]">
+           Swipe to navigate specialized training
+         </p>
       </div>
     </section>
   );

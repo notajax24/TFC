@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
-import { motion } from "framer-motion";
-import { FaWhatsapp } from "react-icons/fa";
+import { motion, AnimatePresence } from "framer-motion";
+import { FaWhatsapp, FaBars, FaTimes } from "react-icons/fa";
 import tfclogo from "../../assets/tfcweb.png"
 
 export default function Navbar() {
@@ -9,163 +9,146 @@ export default function Navbar() {
 
   useEffect(() => {
     const handleScroll = () => {
-      const isScrolled = window.scrollY > 0;
-      setScrolled(isScrolled);
+      setScrolled(window.scrollY > 20);
     };
-
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  const navLinks = [
+    { name: "Home", id: "home" },
+    { name: "Programs", id: "features" },
+    { name: "Packages", id: "packages" },
+    { name: "Lab", id: "exercises" },
+    { name: "About", id: "about" },
+  ];
+
   const handleWhatsAppClick = () => {
     const message = encodeURIComponent("Hi TFC, I want to know about the Latest Offers.");
-    const whatsappUrl = `https://wa.me/919922525245?text=${message}`; // Replace with actual WhatsApp number
-    window.open(whatsappUrl, "_blank");
+    window.open(`https://wa.me/919922525245?text=${message}`, "_blank");
   };
 
   const scrollToSection = (id) => {
     const section = document.getElementById(id);
     if (section) {
-      section.scrollIntoView({
-        behavior: "smooth",
-        block: "start",
-      });
+      section.scrollIntoView({ behavior: "smooth", block: "start" });
     }
     setIsMenuOpen(false);
   };
 
   return (
     <>
-      {/* WhatsApp Floating Button */}
+      {/* ELITE WHATSAPP PULSE BUTTON */}
       <motion.button
         initial={{ scale: 0 }}
         animate={{ scale: 1 }}
-        whileHover={{ scale: 1.1 }}
+        whileHover={{ scale: 1.1, rotate: 8 }}
         whileTap={{ scale: 0.9 }}
         onClick={handleWhatsAppClick}
-        className="fixed bottom-6 right-6 z-50 bg-[#25D366] hover:bg-[#20BA5A] text-white rounded-full p-4 shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center"
-        aria-label="Contact us on WhatsApp"
+        className="fixed bottom-8 right-8 z-50 bg-[#25D366] text-white rounded-2xl p-4 shadow-[0_0_20px_rgba(37,211,102,0.4)] hover:shadow-[0_0_30px_rgba(37,211,102,0.6)] transition-all flex items-center justify-center border border-white/10"
       >
-        <FaWhatsapp className="w-8 h-8" />
+        <FaWhatsapp className="w-7 h-7" />
+        <span className="absolute inset-0 rounded-2xl bg-[#25D366] animate-ping opacity-20 pointer-events-none"></span>
       </motion.button>
 
       <motion.nav
         initial={{ y: -100 }}
         animate={{ y: 0 }}
-        transition={{ duration: 0.5 }}
-        className={`fixed w-full top-0 z-40 transition-all duration-300 ${
-          scrolled
-            ? "backdrop-blur-xl bg-black-900/80  border-b border-gray-800/50"
-            : "backdrop-blur-2 bg-transparent  border-b border-transparent"
+        className={`fixed w-full top-0 z-[100] transition-all duration-500 ${
+          scrolled 
+            ? "py-3 bg-black/80 backdrop-blur-2xl border-b border-white/5" 
+            : "py-6 bg-transparent border-b border-transparent"
         }`}
       >
-        <div className="container mx-auto px-4 py-6 flex justify-between items-center">
-        <button
-          onClick={() => scrollToSection("home")}
-          className="flex items-center gap-2 hover:opacity-80 transition-opacity"
-        >
-          <img 
-            src={tfclogo} 
-            alt="TFC Logo" 
-            className="h-10 sm:h-12 md:h-14 w-auto"
-            loading="eager"
-            fetchPriority="high"
-          />
-          
-        </button>
-
-        {/* Desktop Menu */}
-        <div className="hidden md:flex space-x-8 text-white">
-          <button
+        <div className="container mx-auto px-6 flex justify-between items-center">
+          {/* LOGO AREA */}
+          <motion.button
+            whileHover={{ scale: 1.05 }}
             onClick={() => scrollToSection("home")}
-            className="hover:text-orange-500 transition cursor-pointer"
+            className="relative z-[110]"
           >
-            Home
-          </button>
-          <button
-            onClick={() => scrollToSection("features")}
-            className="hover:text-orange-500 transition cursor-pointer"
-          >
-            Features
-          </button>
-          <button
-            onClick={() => scrollToSection("packages")}
-            className="hover:text-orange-500 transition cursor-pointer"
-          >
-            Packages
-          </button>
-          <button
-            onClick={() => scrollToSection("exercises")}
-            className="hover:text-orange-500 transition cursor-pointer "
-          >
-            Excercise
-          </button>
-          <button
-            onClick={() => scrollToSection("about")}
-            className="hover:text-orange-500 transition cursor-pointer"
-          >
-            About
-          </button>
-        </div>
-
-        {/* Mobile Menu Button */}
-        <button
-          className="md:hidden p-2 text-white hover:text-yellow-400 transition-colors"
-          onClick={() => setIsMenuOpen(!isMenuOpen)}
-        >
-          <svg
-            className="w-6 h-6"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M4 6h16M4 12h16M4 18h16"
+            <img 
+              src={tfclogo} 
+              alt="TFC" 
+              className={`transition-all duration-500 ${scrolled ? "h-10" : "h-14"} w-auto`}
             />
-          </svg>
-        </button>
-      </div>
+          </motion.button>
 
-      {/* Mobile Menu Dropdown */}
-      {isMenuOpen && (
-        <div className="absolute top-full left-0 right-0 bg-gray-900/95 backdrop-blur-lg border-b border-gray-800 md:hidden">
-          <div className="container mx-auto px-4 py-4 space-y-4">
-            <button
-              onClick={() => scrollToSection("home")}
-              className="block text-white hover:text-yellow-400 text-lg"
-            >
-              Home
-            </button>
-            <button
-              onClick={() => scrollToSection("features")}
-              className="block text-white hover:text-yellow-400 text-lg"
-            >
-              Features
-            </button>
+          {/* DESKTOP ELITE MENU */}
+          <div className="hidden md:flex items-center gap-10">
+            {navLinks.map((link) => (
+              <button
+                key={link.id}
+                onClick={() => scrollToSection(link.id)}
+                className="group relative text-[11px] font-black uppercase tracking-[0.3em] text-zinc-400 hover:text-white transition-colors italic"
+              >
+                {link.name}
+                <span className="absolute -bottom-2 left-0 w-0 h-[2px] bg-orange-600 transition-all group-hover:w-full" />
+              </button>
+            ))}
+            
             <button
               onClick={() => scrollToSection("packages")}
-              className="block text-white hover:text-yellow-400 text-lg"
+              className="px-6 py-2 bg-white text-black text-[10px] font-black uppercase tracking-widest italic rounded-full hover:bg-orange-600 hover:text-white transition-all transform hover:scale-105 active:scale-95"
             >
-              Packages
-            </button>
-            <button
-              onClick={() => scrollToSection("contact")}
-              className="block text-white hover:text-yellow-400 text-lg"
-            >
-              Contact
-            </button>
-            <button
-              onClick={() => scrollToSection("about")}
-              className="block text-white hover:text-yellow-400 text-lg"
-            >
-              About
+              Join Lab
             </button>
           </div>
+
+          {/* MOBILE TOGGLE */}
+          <button
+            className="md:hidden z-[110] p-2 text-white"
+            onClick={() => setIsMenuOpen(!isMenuOpen)}
+          >
+            {isMenuOpen ? <FaTimes size={24} /> : <FaBars size={24} />}
+          </button>
         </div>
-      )}
+
+        {/* FULL SCREEN MOBILE OVERLAY */}
+        <AnimatePresence>
+          {isMenuOpen && (
+            <motion.div
+              initial={{ x: "100%" }}
+              animate={{ x: 0 }}
+              exit={{ x: "100%" }}
+              transition={{ type: "spring", damping: 25, stiffness: 200 }}
+              className="fixed inset-0 bg-black z-[105] flex flex-col justify-center p-12 overflow-hidden"
+            >
+              {/* Overlay Watermark */}
+              <h2 className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-[15rem] font-black text-white/[0.03] italic uppercase pointer-events-none select-none">
+                TFC
+              </h2>
+
+              <div className="relative z-10 space-y-8">
+                {navLinks.map((link, i) => (
+                  <motion.button
+                    initial={{ opacity: 0, x: 50 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: i * 0.1 }}
+                    key={link.id}
+                    onClick={() => scrollToSection(link.id)}
+                    className="block text-5xl font-black italic uppercase tracking-tighter text-white hover:text-orange-500 transition-colors text-left"
+                  >
+                    {link.name}
+                  </motion.button>
+                ))}
+              </div>
+
+              <motion.div 
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.5 }}
+                className="mt-20 pt-10 border-t border-white/10 flex flex-col gap-4"
+              >
+                <p className="text-zinc-500 text-xs font-bold uppercase tracking-[0.3em]">Quick Connect</p>
+                <div className="flex gap-6">
+                   <a href="https://instagram.com/tfc.fitness.nashik" className="text-white hover:text-orange-500 text-2xl transition-colors">Instagram</a>
+                   <a href="tel:+919922525245" className="text-white hover:text-orange-500 text-2xl transition-colors">Call</a>
+                </div>
+              </motion.div>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </motion.nav>
     </>
   );
