@@ -213,14 +213,7 @@ export default function Packages() {
         </motion.div>
       </div>
 
-      <style jsx>{`
-        @keyframes shimmer {
-          100% { left: 125%; }
-        }
-        :global(.group-hover\:animate-shimmer:hover) {
-          animation: shimmer 0.75s infinite;
-        }
-      `}</style>
+     
     </section>
   );
 }

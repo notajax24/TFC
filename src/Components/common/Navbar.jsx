@@ -1,21 +1,25 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { FaWhatsapp, FaBars, FaTimes } from "react-icons/fa";
+import { useNavigate, useLocation } from "react-router-dom";
+import { SignedIn, SignedOut, UserButton } from "@clerk/clerk-react";
 import tfclogo from "../../assets/tfcweb.png";
 
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  
+  // React Router hooks for navigation
+  const navigate = useNavigate();
+  const location = useLocation();
 
-  // === NEW: BODY SCROLL LOCK LOGIC ===
+  // === BODY SCROLL LOCK LOGIC ===
   useEffect(() => {
     if (isMenuOpen) {
       document.body.style.overflow = "hidden";
     } else {
       document.body.style.overflow = "unset";
     }
-    
-    // Cleanup function to ensure scroll is restored if component unmounts
     return () => {
       document.body.style.overflow = "unset";
     };
@@ -42,12 +46,22 @@ export default function Navbar() {
     window.open(`https://wa.me/919922525245?text=${message}`, "_blank");
   };
 
+  // SMART SCROLL: Handles navigation even if you are on the Dashboard page
   const scrollToSection = (id) => {
-    const section = document.getElementById(id);
-    if (section) {
-      section.scrollIntoView({ behavior: "smooth", block: "start" });
+    setIsMenuOpen(false); // Close mobile menu
+
+    if (location.pathname !== "/") {
+      // If we aren't on the home page, go to home page first, then scroll
+      navigate("/");
+      setTimeout(() => {
+        const section = document.getElementById(id);
+        if (section) section.scrollIntoView({ behavior: "smooth", block: "start" });
+      }, 100);
+    } else {
+      // Already on home page, just scroll
+      const section = document.getElementById(id);
+      if (section) section.scrollIntoView({ behavior: "smooth", block: "start" });
     }
-    setIsMenuOpen(false); // This will trigger the useEffect to unlock scroll
   };
 
   return (
@@ -99,12 +113,30 @@ export default function Navbar() {
                 <span className="absolute -bottom-2 left-0 w-0 h-[2px] bg-orange-600 transition-all group-hover:w-full" />
               </button>
             ))}
-            <button
-              onClick={() => scrollToSection("packages")}
-              className="px-6 py-2 bg-white text-black text-[10px] font-black uppercase tracking-widest italic rounded-full hover:bg-orange-600 hover:text-white transition-all transform hover:scale-105 active:scale-95"
-            >
-              Join Lab
-            </button>
+
+            {/* === CLERK AUTHENTICATION UI === */}
+            <div className="flex items-center gap-4 border-l border-white/20 pl-6">
+              <SignedOut>
+                {/* Shows when user is logged out */}
+                <button
+                  onClick={() => navigate("/dashboard")}
+                  className="px-6 py-2 bg-white text-black text-[10px] font-black uppercase tracking-widest italic rounded-full hover:bg-orange-600 hover:text-white transition-all transform hover:scale-105 active:scale-95"
+                >
+                  Join Lab
+                </button>
+              </SignedOut>
+
+              <SignedIn>
+                {/* Shows when user is logged in */}
+                <button
+                  onClick={() => navigate("/dashboard")}
+                  className="px-6 py-2 bg-orange-600 text-white text-[10px] font-black uppercase tracking-widest italic rounded-full hover:bg-orange-700 transition-all transform hover:scale-105 active:scale-95"
+                >
+                  Portal
+                </button>
+                <UserButton afterSignOutUrl="/" appearance={{ elements: { avatarBox: "w-8 h-8 border-2 border-orange-500" } }}/>
+              </SignedIn>
+            </div>
           </div>
 
           {/* Mobile Toggle Button */}
@@ -124,7 +156,6 @@ export default function Navbar() {
               animate={{ x: 0 }}
               exit={{ x: "100%" }}
               transition={{ type: "spring", damping: 25, stiffness: 200 }}
-              // Ensure this is fixed and covers the whole screen to prevent leaks
               className="fixed inset-0 bg-black z-[105] flex flex-col justify-center p-12 overflow-hidden h-screen"
             >
               <h2 className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-[15rem] font-black text-white/[0.03] italic uppercase pointer-events-none select-none">
@@ -144,6 +175,32 @@ export default function Navbar() {
                     {link.name}
                   </motion.button>
                 ))}
+
+                {/* Mobile Auth Buttons */}
+                <motion.div 
+                  initial={{ opacity: 0 }} 
+                  animate={{ opacity: 1 }} 
+                  transition={{ delay: 0.5 }} 
+                  className="pt-8 border-t border-white/10 flex items-center gap-4"
+                >
+                  <SignedOut>
+                    <button
+                      onClick={() => { setIsMenuOpen(false); navigate("/dashboard"); }}
+                      className="px-8 py-3 bg-white text-black text-xs font-black uppercase tracking-widest italic rounded-full"
+                    >
+                      Member Login
+                    </button>
+                  </SignedOut>
+                  <SignedIn>
+                    <button
+                      onClick={() => { setIsMenuOpen(false); navigate("/dashboard"); }}
+                      className="px-8 py-3 bg-orange-600 text-white text-xs font-black uppercase tracking-widest italic rounded-full"
+                    >
+                      Enter Portal
+                    </button>
+                    <UserButton afterSignOutUrl="/" />
+                  </SignedIn>
+                </motion.div>
               </div>
             </motion.div>
           )}
