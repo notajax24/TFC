@@ -6,9 +6,7 @@ const monthlyPackages = [
   {
     name: "1 MONTH PACKAGE",
     duration: "Month",
-    price: "2,499",
-    originalPrice: "3,499",
-    savings: "1,000",
+    price: "3,499",
     idealFor: "Testing The Waters",
     services: [
       "All Equipment Access",
@@ -22,17 +20,15 @@ const monthlyPackages = [
   {
     name: "3 MONTHS PACKAGE",
     duration: "3 Months",
-    price: "5,999",
-    originalPrice: "6,999",
-    savings: "1,000",
+    price: "6,999",
     idealFor: "Building A Base Habit",
     services: [
       "All Equipment Access",
       "Meditation Room Access",
       "Daily Shower Access",
       "Certified Trainer Guidance",
-      { text: "2 Steam Sessions / Month", bonus: true },
-      { text: "Gaming Zone: 10min / Day", bonus: true },
+      { text: "2 Times Steam In Month", bonus: true },
+      { text: "Game Zone Access 10min/Day", bonus: true },
     ],
     borderColor: "border-white/10",
     buttonText: "Get 3 Months",
@@ -40,20 +36,18 @@ const monthlyPackages = [
   {
     name: "6 MONTHS PACKAGE",
     duration: "6 Months",
-    price: "9,999",
-    originalPrice: "10,999",
-    savings: "1,000",
-    recommended: true,
+    price: "10,999",
+    recommended: true, // Kept this true so the card styling stays premium, but the tag is gone
     idealFor: "Visible Physical Changes",
     services: [
       "All Equipment Access",
       "Meditation Room Access",
       "Daily Shower Access",
       "Certified Trainer Guidance",
-      { text: "3 Steam Sessions / Month", bonus: true },
-      { text: "Gaming Zone: 10min / Day", bonus: true },
-      { text: "1 MMA Session / Month", bonus: true },
-      { text: "1 Self-Defense Session / Month", bonus: true },
+      { text: "3 Times Steam In Month", bonus: true },
+      { text: "Game Zone Access 10min/Day", bonus: true },
+      { text: "MMA Session 1 Time in a Month", bonus: true },
+      { text: "Ladies Self Defense Session 1 Time In A Month", bonus: true },
     ],
     borderColor: "border-orange-500/50",
     buttonText: "Join the Tribe",
@@ -63,22 +57,20 @@ const monthlyPackages = [
 const annualPackage = {
   name: "YEARLY PACKAGE",
   duration: "Year",
-  price: "14,999",
-  originalPrice: "17,999",
-  savings: "3,000",
-  idealFor: "Elite Lifestyle Commitment",
+  price: "17,999",
+  idealFor: "Year-round Commitment",
   image: packageImage,
   services: [
     "All Equipment Access",
     "Meditation Room Access",
     "Daily Shower Access",
     "Certified Trainer Guidance",
-    { text: "Weekly Steam Sessions", bonus: true },
-    { text: "Gaming Zone: 20min / Day", bonus: true },
-    { text: "2 MMA Sessions / Month", bonus: true },
-    { text: "2 Self-Defense Sessions / Month", bonus: true },
+    { text: "1 Times Steam Weekly", bonus: true },
+    { text: "Game Zone Access 20min/Day", bonus: true },
+    { text: "MMA Session 2 Time in a Month", bonus: true },
+    { text: "Ladies Self Defense Session 2 Time In A Month", bonus: true },
   ],
-  buttonText: "Go Pro - Save ₹3,000",
+  buttonText: "Go Pro Yearly",
 };
 
 export default function Packages() {
@@ -97,15 +89,11 @@ export default function Packages() {
       }`}
     >
       {/* Ensure internal container is flex-col and h-full */}
-      <div className={`bg-zinc-950 rounded-[2.4rem] h-full flex flex-col ${isYearly ? 'lg:flex-row items-stretch' : ''} border ${pkg.borderColor} transition-colors duration-300 relative overflow-hidden`}>
+      <div className={`bg-zinc-950 rounded-[2.4rem] h-full flex flex-col ${isYearly ? 'lg:flex-row items-stretch' : ''} border ${pkg.borderColor || 'border-white/10'} transition-colors duration-300 relative overflow-hidden`}>
         
         {/* TEXT CONTENT AREA */}
         <div className={`p-6 md:p-10 flex flex-col flex-1 ${isYearly ? 'lg:w-3/5 lg:pr-4' : 'w-full'}`}>
-          {pkg.recommended && (
-            <span className="absolute top-6 right-8 bg-orange-600 text-[10px] font-black px-3 py-1 rounded-full italic uppercase tracking-widest text-white z-20">
-              Most Popular
-            </span>
-          )}
+          {/* REMOVED: The "Most Popular" span tag was here */}
           
           <div className="mb-6">
             <h3 className="text-xl md:text-2xl font-black text-white italic uppercase tracking-tighter leading-none mb-2">
@@ -117,14 +105,16 @@ export default function Packages() {
           </div>
           
           <div className="mb-8">
-            <div className="text-zinc-500 line-through text-sm font-bold opacity-70">₹{pkg.originalPrice}</div>
+            {pkg.originalPrice && <div className="text-zinc-500 line-through text-sm font-bold opacity-70">₹{pkg.originalPrice}</div>}
             <div className="flex items-baseline gap-1">
               <span className="text-4xl md:text-5xl font-black text-white tracking-tighter">₹{pkg.price}</span>
               <span className="text-zinc-500 text-xs font-bold italic">/{pkg.duration}</span>
             </div>
-            <div className="mt-2 inline-block bg-green-500/10 text-green-500 text-[10px] font-black px-2 py-0.5 rounded uppercase tracking-wider border border-green-500/20">
-              Save ₹{pkg.savings} Instantly
-            </div>
+            {pkg.savings && (
+              <div className="mt-2 inline-block bg-green-500/10 text-green-500 text-[10px] font-black px-2 py-0.5 rounded uppercase tracking-wider border border-green-500/20">
+                Save ₹{pkg.savings} Instantly
+              </div>
+            )}
           </div>
 
           {/* flex-grow here pushes the button down */}
@@ -212,8 +202,6 @@ export default function Packages() {
           </div>
         </motion.div>
       </div>
-
-     
     </section>
   );
 }

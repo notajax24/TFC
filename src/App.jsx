@@ -2,8 +2,8 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-d
 import { SignedIn, SignedOut, RedirectToSignIn, useUser } from "@clerk/clerk-react";
 
 import LandingPage from "./Components/Pages/LandingPage";
-import UserDashboard from "./Components/Pages/UserDashboard";
-import AdminDashboard from "./Components/Pages/AdminDashboard";
+import UserDashboard from "./Components/User/UserDashboard";
+import AdminDashboard from "./Components/Admin/AdminDashboard";
 
 // Standard protection (Must be logged in)
 const ProtectedRoute = ({ children }) => {

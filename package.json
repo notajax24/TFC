@@ -11,8 +11,10 @@
   },
   "dependencies": {
     "@clerk/clerk-react": "^5.61.3",
+    "@google/generative-ai": "^0.24.1",
     "@react-three/drei": "^9.95.0",
     "@studio-freight/lenis": "^1.0.42",
+    "@supabase/supabase-js": "^2.99.3",
     "@tailwindcss/vite": "^4.0.6",
     "@use-gesture/react": "^10.2.24",
     "expo": "^51.0.0",
@@ -29,6 +31,7 @@
     "@types/react": "^18.2.6",
     "@types/react-dom": "^18.2.1",
     "@vitejs/plugin-react": "^4.2.1",
+    "@vitejs/plugin-react-swc": "^4.3.0",
     "eslint": "^9.19.0",
     "eslint-plugin-react": "^7.37.4",
     "eslint-plugin-react-hooks": "^5.0.0",
